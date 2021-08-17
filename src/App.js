@@ -15,19 +15,22 @@ class App extends Component {
         {
         Name:"Kofi Ghana",
         Phone_Number:"23344555",
-        location:"London"
+        location:"London",
+        id:"12345aaa"
       },
 
         {
         Name:"Kofi Togo",
         Phone_Number:"23344599955",
-        location:"Paris"
+        location:"Paris",
+        id:"123456bb"
       },
 
         {
         Name:"Kofi Kofi",
         Phone_Number:"23344599955",
-        location:"Austria"
+        location:"Austria",
+        id:"123456cc"
       }
         
       ]
@@ -35,8 +38,24 @@ class App extends Component {
   }
 
   addNewUser = (user) => {
+    user.id = Math.random.toString()
     this.setState({
+      
       users:[...this.state.users,user]
+    })
+  }
+
+  deleteUser = (id) => {
+    let undeletedUsers = this.state.users.filter((user) => user.id !== id);
+    this.setState({
+      users: undeletedUsers
+    })
+
+  }
+
+  editUser = (id, updatedUser) => {
+    this.setState({
+      users: this.state.users.map(user => user.id === id ? updatedUser : user)
     })
   }
 
@@ -49,7 +68,7 @@ class App extends Component {
             <Contactform addUser = {this.addNewUser} />
           </Col>
           <Col>
-         <UsersContacts userData={this.state.users} />
+         <UsersContacts userData={this.state.users} deleteUser ={this.deleteUser} editUser={this.editUser} />
           </Col>
         </Row>
       </Container>
